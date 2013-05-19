@@ -39,7 +39,7 @@ rest_cut = (main_cube_width/4)*0.7;
 m3_nut_slop = 0.25;  // Account for inability for layer height to exactly match nut width.
 m3_nut_dia = 5.18 + m3_nut_slop;
 m3_nut_r = m3_nut_dia / 2;
-m3_nut_thickness = 3.35;
+m3_nut_thickness = 2.35;
 
 delta = 0.01;  // Small value to avoid visual artifacts for coincident surfaces.
 
