@@ -1,4 +1,3 @@
-main_cube_width = 39;
 // Presumably, this carriage will ride on an extrusion.
 // Measured width of OpenBeam, slightly less than actual 15mm.
 extrusion_width = 14.90;
@@ -16,6 +15,8 @@ wheel_extrusion_len = 29.60;
 // tension.
 extra_squeeze = 0.3;
 roller_x_offset = wheel_extrusion_len - roller_r - (extrusion_width / 2) - extra_squeeze;
+beam_width = 10.0;
+main_cube_width = (roller_x_offset + beam_width / 2) * 2;
 main_cube_length = 40;
 main_height = 8;
 height_offset = 0;
