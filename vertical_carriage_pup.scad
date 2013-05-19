@@ -36,6 +36,13 @@ cutter_bag = 2;
 minimal_cut = (main_cube_width/4)*0.3;
 rest_cut = (main_cube_width/4)*0.7;
 
+m3_nut_slop = 0.25;  // Account for inability for layer height to exactly match nut width.
+m3_nut_dia = 5.18 + m3_nut_slop;
+m3_nut_r = m3_nut_dia / 2;
+m3_nut_thickness = 3.35;
+
+delta = 0.01;  // Small value to avoid visual artifacts for coincident surfaces.
+
 module oval(w,h, height, center = false) {
   scale([1, h/w, 1]) cylinder(h=height, r=w, $fn=150, center=center);
 }
@@ -226,12 +233,19 @@ module main_carriage()
       translate([-9, -main_cube_length/4, 0]) {
         cylinder(r=1.5, h=main_height+height_offset+0.2, $fn=100, center = true);
       }
+      // Nut trap for tensioning screw
+      translate([-roller_x_offset - beam_width / 2 + m3_nut_thickness, -main_cube_length/8, 0]) {
+        rotate([30, 0, 0]) rotate([0, 270, 0]) {
+          cylinder(r=m3_nut_r, h=m3_nut_thickness + delta, $fn=6);
+        }
+      }
     }
 
     rod_holder();
     mirror([ 1, 0, 0 ]) {
       rod_holder();
     }
+
   }
 }
 
