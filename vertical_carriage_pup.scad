@@ -22,9 +22,9 @@ main_height = 8;
 height_offset = 0;
 rod_fastener_height = 10 + main_height;
 rod_fastener_width = 14;
-rod_fastener_length = 8;
+rod_fastener_length = 9;
 
-round_r = 3;
+round_r = 3.8;
 pad = 0.1;
 smooth = 50;
 
