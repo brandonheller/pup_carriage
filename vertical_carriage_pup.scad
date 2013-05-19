@@ -1,4 +1,5 @@
 main_cube_width = 39;
+roller_x_offset = main_cube_width * 3 / 8;
 main_cube_length = 40;
 main_height = 8;
 height_offset = 0;
@@ -140,7 +141,8 @@ module main_carriage()
         cylinder(r=main_cube_width/4, h=main_height + height_offset + 2, $fn=100, center = true);
         oval(main_cube_width/4, main_cube_length/3, main_height + height_offset + 2, $fn=100, center = true);
       }
-      translate([-main_cube_width/2+(main_cube_width/8), -main_cube_length/4, 0]) {
+      // Hole for roller closest to the corner
+      translate([-roller_x_offset, -main_cube_length/4, 0]) {
         cylinder(r=1.5, h=100, $fn=100, center = true);
         if (height_offset > 0 ) {
           translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
@@ -152,8 +154,8 @@ module main_carriage()
         }
       }
 
-
-      translate([-main_cube_width/2+(main_cube_width/8), main_cube_length/8, height_offset/2]) {
+      // Holes for belt_holder
+      translate([-roller_x_offset, main_cube_length/8, height_offset/2]) {
         translate([0, 3, 0]) {
           rotate([0, 0, 0]) {
             cylinder(r=1.5, h=20, $fn=100, center = true);
@@ -167,7 +169,8 @@ module main_carriage()
       }
 
 
-      translate([-main_cube_width/2+(main_cube_width/8), main_cube_length/2, 0]) {
+      // Hole for roller farthest from rod holders, on side w/2 rollers
+      translate([-roller_x_offset, main_cube_length/2, 0]) {
         cylinder(r=1.5, h=100, $fn=100, center = true);
         if (height_offset > 0 ) {
           translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
@@ -178,7 +181,8 @@ module main_carriage()
           }
         }
       }
-      translate([main_cube_width/2-(main_cube_width/8), (main_cube_length/3)/2, 0]) {
+      // Hole for roller on side w/1 roller
+      translate([roller_x_offset, (main_cube_length/3)/2, 0]) {
         cylinder(r=1.5, h=100, $fn=100, center = true);
         if (height_offset > 0 ) {
           translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
