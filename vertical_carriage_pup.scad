@@ -1,5 +1,21 @@
 main_cube_width = 39;
-roller_x_offset = main_cube_width * 3 / 8;
+// Presumably, this carriage will ride on an extrusion.
+// Measured width of OpenBeam, slightly less than actual 15mm.
+extrusion_width = 14.90;
+roller_dia = 15.57;  // Measured diameter of 3 different Grabercars double 623 w-wheels.
+roller_r = roller_dia / 2;
+// Using calipers, measure from the edge of the extrusion to side of the wheel.
+// This dimension must be slightly less than the sum of the extrusion width + roller dia. 
+wheel_extrusion_len = 29.60;
+// extra_squeeze helps to ensure that the rollers makes contact with the beam
+// before tightening the tensioning screw, even if any measurements are off,
+// screw holes for the rollers are drilled at a skewed angle, or screw holes are
+// slightly enlarged and enable the screws to splay out a bit under tension.
+// The ~2mm of screw adjustment from the slot is not a lot, and it's better
+// to have the beam w/the single roller stretch out than to not get enough
+// tension.
+extra_squeeze = 0.3;
+roller_x_offset = wheel_extrusion_len - roller_r - (extrusion_width / 2) - extra_squeeze;
 main_cube_length = 40;
 main_height = 8;
 height_offset = 0;
