@@ -127,10 +127,16 @@ module rod_holder()
         }
       }
 
-
+      // Holes for rod end mounts
       translate([0, 0, (rod_fastener_height/3-2)+(height_offset)]) {
         rotate([0, 90, 0]) {
           cylinder(r=1.5, h=100, $fn=100, center = true);
+        }
+      }
+      // Nut traps for rod end mounts
+      translate([-rod_fastener_width/2 - delta, 0, (rod_fastener_height/3-2)+(height_offset)]) {
+        rotate([30, 0, 0]) rotate([0, 90, 0]) {
+          cylinder(r=m3_nut_r, h=m3_nut_thickness + delta, $fn=6);
         }
       }
       rod_rounding();
