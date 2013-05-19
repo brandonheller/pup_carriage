@@ -219,6 +219,7 @@ module main_carriage()
         cube([13, 100, 1], center = true);
       }
 
+      // Holes near the rod mounts, probably for screws to tie drive line.
       translate([9, -main_cube_length/4, 0]) {
         cylinder(r=1.5, h=main_height+height_offset+0.2, $fn=100, center = true);
       }
