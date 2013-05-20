@@ -42,7 +42,7 @@ m3_nut_dia = 5.18 + m3_nut_slop;
 m3_nut_r = m3_nut_dia / 2;
 m3_nut_thickness = 2.35;
 
-m3_screw_slop = 0.2;
+m3_screw_slop = 0.1;
 m3_screw_dia = 3.0 + m3_screw_slop;
 m3_screw_r = m3_screw_dia / 2;
 
