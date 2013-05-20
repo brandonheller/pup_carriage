@@ -42,6 +42,10 @@ m3_nut_dia = 5.18 + m3_nut_slop;
 m3_nut_r = m3_nut_dia / 2;
 m3_nut_thickness = 2.35;
 
+m3_screw_slop = 0.2;
+m3_screw_dia = 3.0 + m3_screw_slop;
+m3_screw_r = m3_screw_dia / 2;
+
 delta = 0.01;  // Small value to avoid visual artifacts for coincident surfaces.
 
 module oval(w,h, height, center = false) {
@@ -64,7 +68,7 @@ module cutter()
   translate([main_cube_width/4+minimal_cut, -main_cube_length/8, height_offset/2]) {
     cube([cutter_bag, main_cube_length/4+cutter_bag, main_height + (height_offset*2) + 2], center = true);
     rotate([0, 90, 0]) {
-      cylinder(r=1.5, h=100, $fn=smooth, center = true);
+      cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
     }
   }
   translate([main_cube_width/4+rest_cut, -main_cube_length/4, 0]) {
@@ -131,7 +135,7 @@ module rod_holder()
       // Holes for rod end mounts
       translate([0, 0, (rod_fastener_height/3-2)+(height_offset)]) {
         rotate([0, 90, 0]) {
-          cylinder(r=1.5, h=100, $fn=smooth, center = true);
+          cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
         }
       }
       // Nut traps for rod end mounts
@@ -174,7 +178,7 @@ module main_carriage()
       }
       // Hole for roller closest to the corner
       translate([-roller_x_offset, -main_cube_length/4, 0]) {
-        cylinder(r=1.5, h=100, $fn=smooth, center = true);
+        cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
         if (height_offset > 0 ) {
           translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
             difference() {
@@ -189,12 +193,12 @@ module main_carriage()
       translate([-roller_x_offset, main_cube_length/8, height_offset/2]) {
         translate([0, 3, 0]) {
           rotate([0, 0, 0]) {
-            cylinder(r=1.5, h=20, $fn=smooth, center = true);
+            cylinder(r=m3_screw_r, h=20, $fn=smooth, center = true);
           }
         }
         translate([0, -3, 0]) {
           rotate([0, 0, 0]) {
-            cylinder(r=1.5, h=20, $fn=smooth, center = true);
+            cylinder(r=m3_screw_r, h=20, $fn=smooth, center = true);
           }
         }
       }
@@ -202,7 +206,7 @@ module main_carriage()
 
       // Hole for roller farthest from rod holders, on side w/2 rollers
       translate([-roller_x_offset, main_cube_length/2, 0]) {
-        cylinder(r=1.5, h=100, $fn=smooth, center = true);
+        cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
         if (height_offset > 0 ) {
           translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
             difference() {
@@ -214,7 +218,7 @@ module main_carriage()
       }
       // Hole for roller on side w/1 roller
       translate([roller_x_offset, (main_cube_length/3)/2, 0]) {
-        cylinder(r=1.5, h=100, $fn=smooth, center = true);
+        cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
         if (height_offset > 0 ) {
           translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
             difference() {
@@ -235,10 +239,10 @@ module main_carriage()
 
       // Holes near the rod mounts, probably for screws to tie drive line.
       translate([9, -main_cube_length/4, 0]) {
-        cylinder(r=1.5, h=main_height+height_offset+0.2, $fn=smooth, center = true);
+        cylinder(r=m3_screw_r, h=main_height+height_offset+0.2, $fn=smooth, center = true);
       }
       translate([-9, -main_cube_length/4, 0]) {
-        cylinder(r=1.5, h=main_height+height_offset+0.2, $fn=smooth, center = true);
+        cylinder(r=m3_screw_r, h=main_height+height_offset+0.2, $fn=smooth, center = true);
       }
       // Nut trap for tensioning screw
       translate([-roller_x_offset - beam_width / 2 + m3_nut_thickness, -main_cube_length/8, 0]) {
