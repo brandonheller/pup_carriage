@@ -303,5 +303,5 @@ module belt_holder()
 
 main_carriage();
 translate([-main_cube_width, 0, 9]) {
-  belt_holder();
+  //belt_holder();
 }
