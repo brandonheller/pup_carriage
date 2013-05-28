@@ -122,8 +122,8 @@ module main_carriage()
       }
 
       // Holes for rollers on side w/2 rollers
-      for (x=[-main_cube_length/4, main_cube_length/2]) {
-        translate([-roller_x_offset, x, 0]) {
+      for (y=[-main_cube_length/4, main_cube_length/2]) {
+        translate([-roller_x_offset, y, 0]) {
           cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
           translate([0, 0, main_height/2-m3_screw_head_len-m3_screw_head_gap])
             cylinder(r=m3_screw_head_r, h=100, $fn=smooth);
