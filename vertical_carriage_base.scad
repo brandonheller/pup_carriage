@@ -53,6 +53,10 @@ cut_width = 2.0;  // Width of cut
 minimal_cut = (main_cube_width/4)*0.47;  // Larger values move the main cut (in the y dir) outwards.
 rest_cut = (main_cube_width/4)*0.75; // Distance to make the cut that exits the outside of the carriage.
 
+// Roller holes
+roller_y_offset = (main_cube_length/3)/2;
+roller_y_offset_each = main_cube_length*(3/4)/2;
+
 m3_nut_slop = 0.25;  // Account for inability for layer height to exactly match nut width.
 m3_nut_dia = 6.18 + m3_nut_slop;
 m3_nut_r = m3_nut_dia / 2;
@@ -121,9 +125,18 @@ module main_carriage()
         oval(main_cube_width/4, main_cube_length/3, main_height + 2, $fn=smooth, center = true);
       }
 
-      // Holes for rollers on side w/2 rollers
-      for (y=[-main_cube_length/4, main_cube_length/2]) {
-        translate([-roller_x_offset, y, 0]) {
+      // Holes for rollers
+      translate([0, roller_y_offset, 0]) {
+        // On side w/2 rollers:
+        for (i=[-1, 1]) {
+          translate([-roller_x_offset, roller_y_offset_each * i, 0]) {
+            cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
+            translate([0, 0, main_height/2-m3_screw_head_len-m3_screw_head_gap])
+              cylinder(r=m3_screw_head_r, h=100, $fn=smooth);
+          }
+        }
+        // On side w/1 roller
+        translate([roller_x_offset, 0, 0]) {
           cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
           translate([0, 0, main_height/2-m3_screw_head_len-m3_screw_head_gap])
             cylinder(r=m3_screw_head_r, h=100, $fn=smooth);
