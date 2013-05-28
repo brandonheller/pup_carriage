@@ -119,14 +119,11 @@ module main_carriage()
         oval(main_cube_width/4, main_cube_length/3, main_height + 2, $fn=smooth, center = true);
       }
 
-      // Hole for roller closest to flat end, on side w/2 rollers
-      translate([-roller_x_offset, -main_cube_length/4, 0]) {
-        cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
-      }
-
-      // Hole for roller farthest from flat end, on side w/2 rollers
-      translate([-roller_x_offset, main_cube_length/2, 0]) {
-        cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
+      // Holes for rollers on side w/2 rollers
+      for (x=[-main_cube_length/4, main_cube_length/2]) {
+        translate([-roller_x_offset, -main_cube_length/4, 0]) {
+          cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
+        }
       }
 
       // Hole for roller on side w/1 roller
