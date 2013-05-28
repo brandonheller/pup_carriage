@@ -100,9 +100,6 @@ module main_carriage()
   translate([0, 0 , (main_height + height_offset)/2]) {
     difference() {
       main_part();
-      translate([0, 0, (-main_height/2)]) {
-        //cube([17, 100, height_offset+0.2], center = true);
-      }
       if (height_offset > 0 ) {
         translate([0, 0, (-main_height/2)-height_offset-2]) {
           rotate([90, 0, 0]) {
