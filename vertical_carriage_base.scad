@@ -34,11 +34,11 @@ wheel_extrusion_len = 29.60;
 // tension.
 extra_squeeze = 0.3;
 roller_x_offset = wheel_extrusion_len - roller_r - (extrusion_width / 2) - extra_squeeze;
-beam_width = 10.0;
+beam_width = 10.5;
 main_cube_width = (roller_x_offset + beam_width / 2) * 2;
 main_cube_length = 40;
 roller_y_offset = (main_cube_length/3)/2;
-roller_y_offset_each = main_cube_length*(0.9)/2;
+roller_y_offset_each = main_cube_length*(0.93)/2;
 
 pad = 0.1;
 smooth = 50;
@@ -46,8 +46,9 @@ main_curve_smooth = 150;
 
 // Cut params
 cut_width = 2.0;  // Width of cut
-minimal_cut = (main_cube_width/4)*0.47;  // Larger values move the main cut (in the y dir) outwards.
-rest_cut = (main_cube_width/4)*0.75; // Distance to make the cut that exits the outside of the carriage.
+minimal_cut = (main_cube_width/4)*0.53;  // Larger values move the main cut (in the y dir) outwards.
+rest_cut = (main_cube_width/4)*0.85; // Distance to make the cut that exits the outside of the carriage.
+cut_offset_x = main_cube_width/4+minimal_cut/2;
 
 m3_nut_slop = 0.25;  // Account for inability for layer height to exactly match nut width.
 m3_nut_dia = 6.18 + m3_nut_slop;
@@ -82,20 +83,20 @@ module main_part()
 module cut()
 {
   // Cut from center of part out, along x
-  translate([main_cube_width/4+minimal_cut/2, cut_width/2, 0]) {
+  translate([cut_offset_x, cut_width/2, 0]) {
     cube([minimal_cut+cut_width, cut_width, main_height + 2], center = true);
   }
   // Cut along y and corresponding screw hole through body
-  translate([main_cube_width/4+minimal_cut, -main_cube_length/8, 0]) {
+  translate([cut_offset_x+minimal_cut/2, -main_cube_length/8, 0]) {
     cube([cut_width, main_cube_length/4+cut_width, main_height + 2], center = true);
-    rotate([0, 90, 0]) {
+    translate([0, 1, 0]) rotate([0, 90, 0]) {
       cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
     }
   }
   // Nut trap for tensioning screw
-  translate([-main_cube_width/2+delta, -main_cube_length/8, 0]) {
+  translate([0, 1, 0]) translate([-main_cube_width/2-delta+m3_nut_thickness/2+m3_nut_thickness_extra/2, -main_cube_length/8, 0]) {
     rotate([30, 0, 0]) rotate([0, 90, 0]) {
-      cylinder(r=m3_nut_r, h=m3_nut_thickness+delta, $fn=6, center=true);
+      cylinder(r=m3_nut_r, h=m3_nut_thickness+delta+m3_nut_thickness_extra, $fn=6, center=true);
     }
   }
   // Cut to outer edge of part, along x
@@ -124,10 +125,8 @@ module main_carriage()
         }
         // Section to give 3rd hole some beef
         translate([-main_cube_width/4-delta, -delta, -main_height/2])
-          cube([4+delta, 16+delta, main_height]);
+          cube([4+delta, 17+delta, main_height]);
       }
-
-
 
       // Holes for rollers
       translate([0, roller_y_offset, 0]) {
