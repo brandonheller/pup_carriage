@@ -63,6 +63,8 @@ m3_screw_dia = 3.0 + m3_screw_slop;
 m3_screw_r = m3_screw_dia / 2;
 m3_screw_head_slop = 0.3;
 m3_screw_head_r = 5.5/2 + m3_screw_head_slop;
+m3_screw_head_len = 3.0;  // SHCS
+m3_screw_head_gap = 0.5;
 
 delta = 0.01;  // Small value to avoid visual artifacts for coincident surfaces.
 
@@ -121,14 +123,18 @@ module main_carriage()
 
       // Holes for rollers on side w/2 rollers
       for (x=[-main_cube_length/4, main_cube_length/2]) {
-        translate([-roller_x_offset, -main_cube_length/4, 0]) {
+        translate([-roller_x_offset, x, 0]) {
           cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
+          translate([0, 0, main_height/2-m3_screw_head_len-m3_screw_head_gap])
+            cylinder(r=m3_screw_head_r, h=100, $fn=smooth);
         }
       }
 
       // Hole for roller on side w/1 roller
       translate([roller_x_offset, (main_cube_length/3)/2, 0]) {
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
+        translate([0, 0, main_height/2-m3_screw_head_len-m3_screw_head_gap])
+          cylinder(r=m3_screw_head_r, h=100, $fn=smooth);
       }
 
       // Cut, plus corresponding screw and nut trap.
