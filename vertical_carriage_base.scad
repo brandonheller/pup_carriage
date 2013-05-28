@@ -16,6 +16,7 @@ ball_rail_H = 13;
 carriage_extrusion_dist = 1;
 main_height = ball_rail_H - carriage_extrusion_dist;
 
+// Roller holes
 // Presumably, this carriage will ride on an extrusion.
 // Measured width of OpenBeam, slightly less than actual 15mm.
 extrusion_width = 14.90;
@@ -36,6 +37,8 @@ roller_x_offset = wheel_extrusion_len - roller_r - (extrusion_width / 2) - extra
 beam_width = 10.0;
 main_cube_width = (roller_x_offset + beam_width / 2) * 2;
 main_cube_length = 40;
+roller_y_offset = (main_cube_length/3)/2;
+roller_y_offset_each = main_cube_length*(0.9)/2;
 
 pad = 0.1;
 smooth = 50;
@@ -45,10 +48,6 @@ main_curve_smooth = 150;
 cut_width = 2.0;  // Width of cut
 minimal_cut = (main_cube_width/4)*0.47;  // Larger values move the main cut (in the y dir) outwards.
 rest_cut = (main_cube_width/4)*0.75; // Distance to make the cut that exits the outside of the carriage.
-
-// Roller holes
-roller_y_offset = (main_cube_length/3)/2;
-roller_y_offset_each = main_cube_length*(3/4)/2;
 
 m3_nut_slop = 0.25;  // Account for inability for layer height to exactly match nut width.
 m3_nut_dia = 6.18 + m3_nut_slop;
