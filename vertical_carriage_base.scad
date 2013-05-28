@@ -95,82 +95,6 @@ module cutter()
   }
 }
 
-module rod_rounding()
-{
-  translate([0, -rod_fastener_length/2+round_r, rod_fastener_height/2-round_r+(height_offset/2)]) {
-    difference() {
-      translate([0,-round_r+pad,round_r+pad])
-        cube([rod_fastener_width+2*pad, round_r*2+pad, round_r*2+pad], center = true);
-      rotate(a=[0,90,0]) {
-        cylinder(rod_fastener_width+4*pad,round_r,round_r,center=true,$fn=smooth);
-      }
-    }
-  }
-}
-
-module rod_holder()
-{
-  translate([(main_cube_width/2) - (rod_fastener_width/2) + rod_offset, -main_cube_length/2, rod_fastener_height/2 - main_height/2]) {
-    difference() {
-      union() {
-        cube([rod_fastener_width, rod_fastener_length, rod_fastener_height+height_offset], center = true);
-        translate([rod_fastener_width/2-rod_offset, rod_fastener_length/2-rod_offset/2, -rod_fastener_height/2+main_height/2]) {
-          cylinder(main_height + height_offset, rod_offset, rod_offset, center=true, $fn=smooth);
-        }
-      }
-
-      translate([0, -rod_fastener_length/2, -rod_fastener_height/2]) {
-        rotate([23, 0, 0]) {
-          cube([rod_fastener_width+0.2, 7.5, 100], center = true);
-        }
-      }
-
-      translate([rod_fastener_width/2, 0, rod_fastener_height/2]) {
-
-        translate([0, 0, -(rod_fastener_height-main_height)/2]) {
-          difference() {
-            translate([0, 0, 4]) {
-              rotate([0, 0, 0]) {
-                cube([rod_fastener_width-0.2, rod_fastener_length*2 + 0.2, rod_fastener_height/2 + 0.2], center = true);
-              }
-
-              rotate([25, 0, 0]) {
-                cube([rod_fastener_width-0.2, rod_fastener_length*2 + 0.2, rod_fastener_height/2 + 0.2], center = true);
-              }
-
-              rotate([-25, 0, 0]) {
-                cube([rod_fastener_width-0.2, rod_fastener_length*2 + 0.2, rod_fastener_height/2 + 0.2], center = true);
-              }
-            }
-
-
-            rotate([0, -90, 0]) {
-              cylinder(h = rod_fastener_width/1, r1 = 2.5, r2 = 8, center = false, $fn=smooth);
-            }
-          }
-        }
-      }
-
-      // Holes for rod end mounts
-      translate([0, 0, (rod_fastener_height/3-2)+(height_offset)]) {
-        rotate([0, 90, 0]) {
-          cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
-        }
-      }
-      // Nut traps for rod end mounts
-      translate([-rod_fastener_width/2 - delta, 0, (rod_fastener_height/3-2)+(height_offset)]) {
-        rotate([30, 0, 0]) rotate([0, 90, 0]) {
-          cylinder(r=m3_nut_r, h=m3_nut_thickness + delta, $fn=6);
-        }
-      }
-      rod_rounding();
-      mirror([ 0, 1, 0 ]) {
-        rod_rounding();
-      }
-    }
-  }
-}
-
 module main_carriage()
 {
   translate([0, 0 , (main_height + height_offset)/2]) {
@@ -208,22 +132,6 @@ module main_carriage()
         }
       }
 
-      // Holes for belt_holder
-      // BDH: commented out to make more of a platform
-//      translate([-roller_x_offset, main_cube_length/8, height_offset/2]) {
-//        translate([0, 3, 0]) {
-//          rotate([0, 0, 0]) {
-//            cylinder(r=m3_screw_r, h=20, $fn=smooth, center = true);
-//          }
-//        }
-//        translate([0, -3, 0]) {
-//          rotate([0, 0, 0]) {
-//            cylinder(r=m3_screw_r, h=20, $fn=smooth, center = true);
-//          }
-//        }
-//      }
-
-
       // Hole for roller farthest from rod holders, on side w/2 rollers
       translate([-roller_x_offset, main_cube_length/2, 0]) {
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
@@ -252,20 +160,6 @@ module main_carriage()
 
       cutter();
 
-      // Cut for belt.
-      // BDH: Commented out to get a flat plate.
-//      translate([0, 0, (main_height+height_offset)/2]) {
-//        cube([13, 100, 1], center = true);
-//      }
-
-      // Holes near the rod mounts, probably for screws to tie drive line.
-      // BDH: Commented out; need space for platform screws.  
-//      translate([9, -main_cube_length/4, 0]) {
-//        cylinder(r=m3_screw_r, h=main_height+height_offset+0.2, $fn=smooth, center = true);
-//      }
-//      translate([-9, -main_cube_length/4, 0]) {
-//        cylinder(r=m3_screw_r, h=main_height+height_offset+0.2, $fn=smooth, center = true);
-//      }
       // Nut trap for tensioning screw
       translate([-roller_x_offset - beam_width / 2 + m3_nut_thickness, -main_cube_length/8, 0]) {
         rotate([30, 0, 0]) rotate([0, 270, 0]) {
@@ -273,57 +167,7 @@ module main_carriage()
         }
       }
     }
-
-//    rod_holder();
-//    mirror([ 1, 0, 0 ]) {
-//      rod_holder();
-//    }
-
   }
 }
-
-
-module belt_holder()
-{
-  difference() {
-    union() {
-      cube([10, 12, 15], center = true);
-      translate([0, 0, -15/2]) {
-        difference() {
-          union() {
-            cube([10, 40, 3], center = true);
-            cube([18, 10, 3], center = true);
-            translate([-18/2, 0, 0]) {
-              cylinder(3, r=10/2, r=10/2, center=true, $fn=smooth);
-            }
-            translate([18/2, 0, 0]) {
-              cylinder(3, r=10/2, r=10/2, center=true, $fn=smooth);
-            }
-          }
-          translate([18/2, 0, 0]) {
-            cylinder(100, r=3/2, r=3/2, center=true, $fn=smooth);
-          }
-          translate([-18/2, 0, 0]) {
-            cylinder(100, r=3/2, r=3/2, center=true, $fn=smooth);
-          }
-        }
-      }
-    }
-    translate([0, 3, 3]) {
-      rotate([0, 90, 0]) {
-        cylinder(100, r=3/2, r=3/2, center=true, $fn=smooth);
-      }
-    }
-    translate([0, -3, 3]) {
-      rotate([0, 90, 0]) {
-        cylinder(100, r=3/2, r=3/2, center=true, $fn=smooth);
-      }
-    }
-  }
-}
-
 
 main_carriage();
-translate([-main_cube_width, 0, 9]) {
-  //belt_holder();
-}
