@@ -36,7 +36,6 @@ roller_x_offset = wheel_extrusion_len - roller_r - (extrusion_width / 2) - extra
 beam_width = 10.0;
 main_cube_width = (roller_x_offset + beam_width / 2) * 2;
 main_cube_length = 40;
-height_offset = 0;
 rod_fastener_height = 10 + main_height;
 rod_fastener_width = 14;
 rod_fastener_length = 9;
@@ -73,85 +72,52 @@ module oval(w,h, height, center = false) {
 
 module main_part()
 {
-  cube([main_cube_width, main_cube_width, main_height+height_offset], center = true);
+  cube([main_cube_width, main_cube_width, main_height], center = true);
   translate([0, main_cube_width/2, 0]) {
-    cylinder(r=main_cube_width/2, h=main_height+height_offset, $fn=main_curve_smooth, center = true);
+    cylinder(r=main_cube_width/2, h=main_height, $fn=main_curve_smooth, center = true);
   }
 }
 
 module cut()
 {
   translate([main_cube_width/4+minimal_cut/2, cut_width/2, 0]) {
-    cube([minimal_cut+cut_width, cut_width, main_height + height_offset + 2], center = true);
+    cube([minimal_cut+cut_width, cut_width, main_height + 2], center = true);
   }
-  translate([main_cube_width/4+minimal_cut, -main_cube_length/8, height_offset/2]) {
-    cube([cut_width, main_cube_length/4+cut_width, main_height + (height_offset*2) + 2], center = true);
+  translate([main_cube_width/4+minimal_cut, -main_cube_length/8, 0]) {
+    cube([cut_width, main_cube_length/4+cut_width, main_height + 2], center = true);
     rotate([0, 90, 0]) {
       cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
     }
   }
   translate([main_cube_width/4+rest_cut, -main_cube_length/4, 0]) {
-    cube([rest_cut, cut_width, main_height + height_offset + 2], center = true);
+    cube([rest_cut, cut_width, main_height + 2], center = true);
   }
 }
 
 module main_carriage()
 {
-  translate([0, 0 , (main_height + height_offset)/2]) {
+  translate([0, 0 , (main_height)/2]) {
     difference() {
       main_part();
-      if (height_offset > 0 ) {
-        translate([0, 0, (-main_height/2)-height_offset-2]) {
-          rotate([90, 0, 0]) {
-            //cylinder(r=main_cube_width/4, h=100, $fn=smooth, center = true);
-            //oval(main_cube_width/4, main_cube_width/6, 100, true);
-            oval(17.8/2, main_cube_width/4.0, 100, true);
-          }
-        }
-      }
       translate([0, main_cube_length/4, 0]) {
-        cube([main_cube_width/2, main_cube_length/2, main_height + height_offset + 2], center = true);
+        cube([main_cube_width/2, main_cube_length/2, main_height + 2], center = true);
       }
       translate([0, main_cube_length/2, 0]) {
-        cylinder(r=main_cube_width/4, h=main_height + height_offset + 2, $fn=smooth, center = true);
-        oval(main_cube_width/4, main_cube_length/3, main_height + height_offset + 2, $fn=smooth, center = true);
+        cylinder(r=main_cube_width/4, h=main_height + 2, $fn=smooth, center = true);
+        oval(main_cube_width/4, main_cube_length/3, main_height + 2, $fn=smooth, center = true);
       }
       // Hole for roller closest to the corner
       translate([-roller_x_offset, -main_cube_length/4, 0]) {
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
-        if (height_offset > 0 ) {
-          translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
-            difference() {
-              cylinder(r=12/2, h=bearing_inset+0.2, $fn=smooth, center = true);
-              cylinder(r=5/2, h=bearing_inset+0.2, $fn=smooth, center = true);
-            }
-          }
-        }
       }
 
       // Hole for roller farthest from rod holders, on side w/2 rollers
       translate([-roller_x_offset, main_cube_length/2, 0]) {
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
-        if (height_offset > 0 ) {
-          translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
-            difference() {
-              cylinder(r=12/2, h=bearing_inset+0.2, $fn=smooth, center = true);
-              cylinder(r=5/2, h=bearing_inset+0.2, $fn=smooth, center = true);
-            }
-          }
-        }
       }
       // Hole for roller on side w/1 roller
       translate([roller_x_offset, (main_cube_length/3)/2, 0]) {
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
-        if (height_offset > 0 ) {
-          translate([0, 0, -main_height/2-height_offset+bearing_inset]) {
-            difference() {
-              cylinder(r=12/2, h=bearing_inset+0.2, $fn=smooth, center = true);
-              cylinder(r=5/2, h=bearing_inset+0.2, $fn=smooth, center = true);
-            }
-          }
-        }
       }
 
       cut();
