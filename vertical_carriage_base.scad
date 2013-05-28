@@ -148,6 +148,9 @@ module main_carriage()
       // Cut, plus corresponding screw and nut trap.
       cut();
 
+      // Trim top
+      translate([0, -100/2-17, 0]) cube([100, 100, 100], center=true);
+
       // 20x20 m3 grid to match HIWIN rails.
       translate([0, 1.5, 0]) {
         translate([10, -10, 0]) cylinder(r=m3_screw_r, h=100, $fn=50, center=true);
