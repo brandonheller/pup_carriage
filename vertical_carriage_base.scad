@@ -103,7 +103,6 @@ module main_carriage()
         cube([main_cube_width/2, main_cube_length/2, main_height + 2], center = true);
       }
       translate([0, main_cube_length/2, 0]) {
-        cylinder(r=main_cube_width/4, h=main_height + 2, $fn=smooth, center = true);
         oval(main_cube_width/4, main_cube_length/3, main_height + 2, $fn=smooth, center = true);
       }
       // Hole for roller closest to the corner
