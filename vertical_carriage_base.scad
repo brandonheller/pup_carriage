@@ -54,6 +54,7 @@ m3_nut_slop = 0.25;  // Account for inability for layer height to exactly match 
 m3_nut_dia = 6.18 + m3_nut_slop;
 m3_nut_r = m3_nut_dia / 2;
 m3_nut_thickness = 2.35;
+m3_nut_thickness_extra = m3_nut_thickness + 2;  // extra thickness to help match discrete screw sizes
 
 m3_screw_slop = 0.1;
 m3_screw_dia = 3.0 + m3_screw_slop;
@@ -142,10 +143,10 @@ module main_carriage()
       // 20x20 m3 grid to match HIWIN rails.
       translate([0, 1.5, 0]) {
         translate([10, -10, 0]) cylinder(r=m3_screw_r, h=100, $fn=50, center=true);
-        translate([10, -10, -main_height/2-delta]) cylinder(r=m3_nut_r, h=m3_nut_thickness+delta, $fn=6);
+        translate([10, -10, -main_height/2-delta]) cylinder(r=m3_nut_r, h=m3_nut_thickness_extra+delta, $fn=6);
         for (i=[-1, 1]) {
           translate([-10, i*10, 0]) cylinder(r=m3_screw_r, h=100, $fn=50, center=true);
-          translate([-10, i*10, -main_height/2-delta]) cylinder(r=m3_nut_r, h=m3_nut_thickness+delta, $fn=6);
+          translate([-10, i*10, -main_height/2-delta]) cylinder(r=m3_nut_r, h=m3_nut_thickness_extra+delta, $fn=6);
         }
       }
 
