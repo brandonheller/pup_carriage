@@ -49,9 +49,9 @@ rod_offset = 3;
 
 bearing_inset = 1.5;
 
-cut_width = 2;  // Width of cut
-minimal_cut = (main_cube_width/4)*0.3;  // Larger values move the main cut (in the y dir) outwards.
-rest_cut = (main_cube_width/4)*0.7; // Distance to make the cut that exits the outside of the carriage.
+cut_width = 2.0;  // Width of cut
+minimal_cut = (main_cube_width/4)*0.47;  // Larger values move the main cut (in the y dir) outwards.
+rest_cut = (main_cube_width/4)*0.75; // Distance to make the cut that exits the outside of the carriage.
 
 m3_nut_slop = 0.25;  // Account for inability for layer height to exactly match nut width.
 m3_nut_dia = 6.18 + m3_nut_slop;
