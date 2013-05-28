@@ -36,19 +36,12 @@ roller_x_offset = wheel_extrusion_len - roller_r - (extrusion_width / 2) - extra
 beam_width = 10.0;
 main_cube_width = (roller_x_offset + beam_width / 2) * 2;
 main_cube_length = 40;
-rod_fastener_height = 10 + main_height;
-rod_fastener_width = 14;
-rod_fastener_length = 9;
 
-round_r = 3.8;
 pad = 0.1;
 smooth = 50;
 main_curve_smooth = 150;
 
-rod_offset = 3;
-
-bearing_inset = 1.5;
-
+// Cut params
 cut_width = 2.0;  // Width of cut
 minimal_cut = (main_cube_width/4)*0.47;  // Larger values move the main cut (in the y dir) outwards.
 rest_cut = (main_cube_width/4)*0.75; // Distance to make the cut that exits the outside of the carriage.
@@ -111,7 +104,7 @@ module cut()
 
 module main_carriage()
 {
-  translate([0, 0 , (main_height)/2]) {
+  translate([0, 0, (main_height)/2]) {
     difference() {
       main_part();
 
@@ -141,13 +134,6 @@ module main_carriage()
           translate([0, 0, main_height/2-m3_screw_head_len-m3_screw_head_gap])
             cylinder(r=m3_screw_head_r, h=100, $fn=smooth);
         }
-      }
-
-      // Hole for roller on side w/1 roller
-      translate([roller_x_offset, (main_cube_length/3)/2, 0]) {
-        cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
-        translate([0, 0, main_height/2-m3_screw_head_len-m3_screw_head_gap])
-          cylinder(r=m3_screw_head_r, h=100, $fn=smooth);
       }
 
       // Cut, plus corresponding screw and nut trap.
