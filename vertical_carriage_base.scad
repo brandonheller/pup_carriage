@@ -108,15 +108,24 @@ module main_carriage()
     difference() {
       main_part();
 
-      // Square cutout in center
-      translate([0, main_cube_length/4, 0]) {
-        cube([main_cube_width/2, main_cube_length/2, main_height + 2], center = true);
+      // Square + oval cutout in center, minus section to give 3rd screw hole some beef.
+      difference() {
+        union() {
+          // Square cutout
+          translate([0, main_cube_length/4, 0]) {
+            cube([main_cube_width/2, main_cube_length/2, main_height + 2], center = true);
+          }
+          // Oval cutout at rounded end
+          translate([0, main_cube_length/2, 0]) {
+            oval(main_cube_width/4, main_cube_length/3, main_height + 2, $fn=smooth, center = true);
+          }  
+        }
+        // Section to give 3rd hole some beef
+        translate([-main_cube_width/4-delta, -delta, -main_height/2])
+          cube([4+delta, 16+delta, main_height]);
       }
 
-      // Oval cutout at rounded end
-      translate([0, main_cube_length/2, 0]) {
-        oval(main_cube_width/4, main_cube_length/3, main_height + 2, $fn=smooth, center = true);
-      }
+
 
       // Holes for rollers
       translate([0, roller_y_offset, 0]) {
