@@ -80,15 +80,24 @@ module main_part()
 
 module cut()
 {
+  // Cut from center of part out, along x
   translate([main_cube_width/4+minimal_cut/2, cut_width/2, 0]) {
     cube([minimal_cut+cut_width, cut_width, main_height + 2], center = true);
   }
+  // Cut along y and corresponding screw hole through body
   translate([main_cube_width/4+minimal_cut, -main_cube_length/8, 0]) {
     cube([cut_width, main_cube_length/4+cut_width, main_height + 2], center = true);
     rotate([0, 90, 0]) {
       cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
     }
   }
+  // Nut trap for tensioning screw
+  translate([main_cube_width/2+delta, -main_cube_length/8, 0]) {
+    rotate([30, 0, 0]) rotate([0, -90, 0]) {
+        cylinder(r=m3_nut_r, h=m3_nut_thickness+delta, $fn=6, center=true);
+    }
+  }
+  // Cut to outer edge of part, along x
   translate([main_cube_width/4+rest_cut, -main_cube_length/4, 0]) {
     cube([rest_cut, cut_width, main_height + 2], center = true);
   }
@@ -99,34 +108,33 @@ module main_carriage()
   translate([0, 0 , (main_height)/2]) {
     difference() {
       main_part();
+
+      // Square cutout in center
       translate([0, main_cube_length/4, 0]) {
         cube([main_cube_width/2, main_cube_length/2, main_height + 2], center = true);
       }
+
+      // Oval cutout at rounded end
       translate([0, main_cube_length/2, 0]) {
         oval(main_cube_width/4, main_cube_length/3, main_height + 2, $fn=smooth, center = true);
       }
-      // Hole for roller closest to the corner
+
+      // Hole for roller closest to flat end, on side w/2 rollers
       translate([-roller_x_offset, -main_cube_length/4, 0]) {
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
       }
 
-      // Hole for roller farthest from rod holders, on side w/2 rollers
+      // Hole for roller farthest from flat end, on side w/2 rollers
       translate([-roller_x_offset, main_cube_length/2, 0]) {
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
       }
+
       // Hole for roller on side w/1 roller
       translate([roller_x_offset, (main_cube_length/3)/2, 0]) {
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
       }
 
       cut();
-
-      // Nut trap for tensioning screw
-      translate([-roller_x_offset - beam_width / 2 + m3_nut_thickness, -main_cube_length/8, 0]) {
-        rotate([30, 0, 0]) rotate([0, 270, 0]) {
-          cylinder(r=m3_nut_r, h=m3_nut_thickness + delta, $fn=6);
-        }
-      }
     }
   }
 }
