@@ -94,9 +94,9 @@ module cut()
     }
   }
   // Nut trap for tensioning screw
-  translate([main_cube_width/2+delta, -main_cube_length/8, 0]) {
-    rotate([30, 0, 0]) rotate([0, -90, 0]) {
-        cylinder(r=m3_nut_r, h=m3_nut_thickness+delta, $fn=6, center=true);
+  translate([-main_cube_width/2+delta, -main_cube_length/8, 0]) {
+    rotate([30, 0, 0]) rotate([0, 90, 0]) {
+      cylinder(r=m3_nut_r, h=m3_nut_thickness+delta, $fn=6, center=true);
     }
   }
   // Cut to outer edge of part, along x
