@@ -134,6 +134,7 @@ module main_carriage()
         cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
       }
 
+      // Cut, plus corresponding screw and nut trap.
       cut();
     }
   }
