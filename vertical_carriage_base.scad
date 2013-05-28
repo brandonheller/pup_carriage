@@ -50,7 +50,7 @@ rod_offset = 3;
 
 bearing_inset = 1.5;
 
-cutter_bag = 2;  // Width of cut
+cut_width = 2;  // Width of cut
 minimal_cut = (main_cube_width/4)*0.3;  // Larger values move the main cut (in the y dir) outwards.
 rest_cut = (main_cube_width/4)*0.7; // Distance to make the cut that exits the outside of the carriage.
 
@@ -79,19 +79,19 @@ module main_part()
   }
 }
 
-module cutter()
+module cut()
 {
-  translate([main_cube_width/4+minimal_cut/2, cutter_bag/2, 0]) {
-    cube([minimal_cut+cutter_bag, cutter_bag, main_height + height_offset + 2], center = true);
+  translate([main_cube_width/4+minimal_cut/2, cut_width/2, 0]) {
+    cube([minimal_cut+cut_width, cut_width, main_height + height_offset + 2], center = true);
   }
   translate([main_cube_width/4+minimal_cut, -main_cube_length/8, height_offset/2]) {
-    cube([cutter_bag, main_cube_length/4+cutter_bag, main_height + (height_offset*2) + 2], center = true);
+    cube([cut_width, main_cube_length/4+cut_width, main_height + (height_offset*2) + 2], center = true);
     rotate([0, 90, 0]) {
       cylinder(r=m3_screw_r, h=100, $fn=smooth, center = true);
     }
   }
   translate([main_cube_width/4+rest_cut, -main_cube_length/4, 0]) {
-    cube([rest_cut, cutter_bag, main_height + height_offset + 2], center = true);
+    cube([rest_cut, cut_width, main_height + height_offset + 2], center = true);
   }
 }
 
@@ -157,8 +157,7 @@ module main_carriage()
         }
       }
 
-
-      cutter();
+      cut();
 
       // Nut trap for tensioning screw
       translate([-roller_x_offset - beam_width / 2 + m3_nut_thickness, -main_cube_length/8, 0]) {
