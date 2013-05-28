@@ -63,7 +63,7 @@ m3_screw_head_r = 5.5/2 + m3_screw_head_slop;
 m3_screw_head_len = 3.0;  // SHCS
 m3_screw_head_gap = 0.5;
 
-delta = 0.01;  // Small value to avoid visual artifacts for coincident surfaces.
+delta = 0.02;  // Small value to avoid visual artifacts for coincident surfaces.
 
 module oval(w,h, height, center = false) {
   scale([1, h/w, 1]) cylinder(h=height, r=w, $fn=main_curve_smooth, center=center);
@@ -138,6 +138,17 @@ module main_carriage()
 
       // Cut, plus corresponding screw and nut trap.
       cut();
+
+      // 20x20 m3 grid to match HIWIN rails.
+      translate([0, 1.5, 0]) {
+        translate([10, -10, 0]) cylinder(r=m3_screw_r, h=100, $fn=50, center=true);
+        translate([10, -10, -main_height/2-delta]) cylinder(r=m3_nut_r, h=m3_nut_thickness+delta, $fn=6);
+        for (i=[-1, 1]) {
+          translate([-10, i*10, 0]) cylinder(r=m3_screw_r, h=100, $fn=50, center=true);
+          translate([-10, i*10, -main_height/2-delta]) cylinder(r=m3_nut_r, h=m3_nut_thickness+delta, $fn=6);
+        }
+      }
+
     }
   }
 }
