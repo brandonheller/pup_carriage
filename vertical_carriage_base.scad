@@ -64,7 +64,7 @@ m3_screw_head_r = 5.5/2 + m3_screw_head_slop;
 m3_screw_head_len = 3.0;  // SHCS
 m3_screw_head_gap = 0.5;
 
-bridge_thickness = 1.0;  // To avoid ugly overhangs, use bridges.
+bridge_thickness = 0.6;  // To avoid ugly overhangs, use bridges.
 
 delta = 0.02;  // Small value to avoid visual artifacts for coincident surfaces.
 
