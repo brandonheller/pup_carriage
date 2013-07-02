@@ -54,7 +54,10 @@ m3_nut_slop = 0.25;  // Account for inability for layer height to exactly match 
 m3_nut_dia = 6.18 + m3_nut_slop;
 m3_nut_r = m3_nut_dia / 2;
 m3_nut_thickness = 2.35;
-m3_nut_thickness_extra = m3_nut_thickness + 2;  // extra thickness to help match discrete screw sizes
+// Extra thickness to help match discrete screw sizes
+m3_nut_thickness_extra = m3_nut_thickness + 2.3;
+// A bit less extra thickness for tensioner to avoid causing a cutout in the nut trap for the 20x20 grid.
+m3_nut_thickness_extra_tensioner = m3_nut_thickness + 1;
 
 m3_screw_slop = 0.1;
 m3_screw_dia = 3.0 + m3_screw_slop;
@@ -94,9 +97,9 @@ module cut()
     }
   }
   // Nut trap for tensioning screw
-  translate([0, 1, 0]) translate([-main_cube_width/2-delta+m3_nut_thickness/2+m3_nut_thickness_extra/2, -main_cube_length/8, 0]) {
+  translate([0, 1, 0]) translate([-main_cube_width/2-delta+m3_nut_thickness/2+m3_nut_thickness_extra_tensioner/2, -main_cube_length/8, 0]) {
     rotate([30, 0, 0]) rotate([0, 90, 0]) {
-      cylinder(r=m3_nut_r, h=m3_nut_thickness+delta+m3_nut_thickness_extra, $fn=6, center=true);
+      cylinder(r=m3_nut_r, h=m3_nut_thickness+delta+m3_nut_thickness_extra_tensioner, $fn=6, center=true);
     }
   }
   // Cut to outer edge of part, along x
